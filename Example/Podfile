@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'NJTeachersHelerList_Example' do
+  pod 'NJTeachersHelerList', :path => '../'
+
+  target 'NJTeachersHelerList_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
