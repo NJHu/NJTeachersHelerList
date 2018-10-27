@@ -1,0 +1,16 @@
+PODS:
+  - NJTeachersHelerList (0.1.0)
+
+DEPENDENCIES:
+  - NJTeachersHelerList (from `../`)
+
+EXTERNAL SOURCES:
+  NJTeachersHelerList:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  NJTeachersHelerList: d8de6055dc4b014d808a7851cb5aa76aaab3bd99
+
+PODFILE CHECKSUM: e2eb773b27b97a05c00d1c8cbee96c57d2bfe417
+
+COCOAPODS: 1.5.3
