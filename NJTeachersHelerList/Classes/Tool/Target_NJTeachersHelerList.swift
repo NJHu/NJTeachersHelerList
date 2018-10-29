@@ -13,11 +13,13 @@ import NJKit
     @objc func Action_NJTeachersHelerList(params: [String: AnyObject]) -> UIViewController? {
         
         let childController = NJTeachersHelerListController(tableViewStyle: UITableView.Style.plain)
+        
+        let item = THItem()
+        childController.intoItem = item
         let nav = NJNavigationController(rootViewController: childController)
         
         childController.tabBarItem.image = UIImage.nj_image(name: "icon_40", bundleClass: Target_NJTeachersHelerList.self)
         childController.tabBarItem.selectedImage = UIImage.nj_image(name: "icon_40", bundleClass: Target_NJTeachersHelerList.self)?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
-//        childController.tabBarItem.title = "课程"
         childController.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -3);
         
         return nav
