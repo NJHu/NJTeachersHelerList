@@ -8,9 +8,15 @@
 import UIKit
 import SwiftyJSON
 
+enum THItemFileType: String {
+    case unknown
+    case folder
+    case video
+}
+
 class THItem: NSObject {
     var fileName: String
-    var fileType: String
+    var fileType: THItemFileType
     var videoLength: String
     var videoTime: String
     var author: String
@@ -25,16 +31,24 @@ class THItem: NSObject {
     init(jsonData: JSON) {
         self.jsonData = jsonData
         fileName = jsonData["fileName"].stringValue
-        fileType = jsonData["fileType"].stringValue
+        let fileTypeStr = jsonData["fileType"].stringValue
         videoLength = jsonData["videoLength"].stringValue
         videoTime = jsonData["videoTime"].stringValue
         author = jsonData["author"].stringValue
         introduction = jsonData["introduction"].stringValue
         
+        if fileTypeStr == "folder" {
+            fileType = .folder
+        } else if fileTypeStr == "video" {
+            fileType = .video
+        }else {
+            fileType = .unknown
+        }
+        
         //        kBCLShoolBaseUrl
         //        kPageConfig
         //        THPaths
-        if fileType == "folder" {
+        if fileType == THItemFileType.folder {
             var middlePath = "/"
             for path in THPaths {
                 middlePath += (path.fileName + "/")
@@ -43,7 +57,7 @@ class THItem: NSObject {
             
             print(nextPageUrl)
             
-        }else if fileType == "video" {
+        }else if fileType == .video {
             cellHeight = 100
         }
     }

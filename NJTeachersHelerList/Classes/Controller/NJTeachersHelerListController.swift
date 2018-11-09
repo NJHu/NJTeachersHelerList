@@ -55,8 +55,11 @@ extension NJTeachersHelerListController {
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "UITableViewCell")
             cell?.accessoryType = .disclosureIndicator
-            cell?.textLabel?.text = helperListViewModel.page?.items[indexPath.row].fileName
-            cell?.detailTextLabel?.text = helperListViewModel.page?.items[indexPath.row].introduction
+        }
+        cell?.textLabel?.text = helperListViewModel.page?.items[indexPath.row].fileName
+        cell?.detailTextLabel?.text = helperListViewModel.page?.items[indexPath.row].introduction
+        if helperListViewModel.page?.items[indexPath.row].fileType == .folder {
+            cell?.imageView?.image = UIImage.nj_image(name: "NJ_bcl_file_type", bundleClass: NJTeachersHelerListController.self)
         }
         return cell!
     }
