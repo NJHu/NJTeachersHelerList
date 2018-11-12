@@ -7,6 +7,7 @@
 
 import UIKit
 import NJKit
+import AVKit
 
 class NJTeachersHelerListController: NJRefreshTableViewController {
     
@@ -54,14 +55,15 @@ extension NJTeachersHelerListController {
         var cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell")
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "UITableViewCell")
-            cell?.accessoryType = .disclosureIndicator
         }
         cell?.textLabel?.text = helperListViewModel.page?.items[indexPath.row].fileName
         cell?.detailTextLabel?.text = helperListViewModel.page?.items[indexPath.row].introduction
         if helperListViewModel.page?.items[indexPath.row].fileType == .folder {
             cell?.imageView?.image = UIImage.nj_image(name: "NJ_bcl_file_type", bundleClass: NJTeachersHelerListController.self)
+            cell?.accessoryType = .disclosureIndicator
         }else if helperListViewModel.page?.items[indexPath.row].fileType == .video {
             cell?.imageView?.image = UIImage.nj_image(name: "NJ_bcl_video_type", bundleClass: NJTeachersHelerListController.self)
+            cell?.accessoryType = .none
         }
         return cell!
     }
@@ -79,9 +81,17 @@ extension NJTeachersHelerListController {
             THPaths.append(item)
             self.navigationController?.pushViewController(nextTeacherPage, animated: true)
         }else if item.fileType == .video {
-            let webVC = NJWebViewController()
-            webVC.html = "<video controls=\"\" autoplay=\"\" name=\"media\"><source src=\"\(item.videoUrl)\" type=\"video/mp4\"></video>"
-            self.navigationController?.pushViewController(webVC, animated: true)
+            if let videoURL = URL(string: item.videoUrl.urlEncoding() ?? "") {
+                let playerVC = AVPlayerViewController()
+                let avplayer = AVPlayer(url: videoURL)
+                playerVC.player = avplayer
+                playerVC.videoGravity = .resizeAspect
+                playerVC.showsPlaybackControls = true
+                playerVC.player?.play()
+                self.present(playerVC, animated: true) {
+                    
+                }
+            }
         }
     }
 }
