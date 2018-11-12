@@ -60,6 +60,8 @@ extension NJTeachersHelerListController {
         cell?.detailTextLabel?.text = helperListViewModel.page?.items[indexPath.row].introduction
         if helperListViewModel.page?.items[indexPath.row].fileType == .folder {
             cell?.imageView?.image = UIImage.nj_image(name: "NJ_bcl_file_type", bundleClass: NJTeachersHelerListController.self)
+        }else if helperListViewModel.page?.items[indexPath.row].fileType == .video {
+            cell?.imageView?.image = UIImage.nj_image(name: "NJ_bcl_video_type", bundleClass: NJTeachersHelerListController.self)
         }
         return cell!
     }
@@ -70,10 +72,16 @@ extension NJTeachersHelerListController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let nextTeacherPage = NJTeachersHelerListController(tableViewStyle: UITableView.Style.plain)
-        nextTeacherPage.intoItem = helperListViewModel.page!.items[indexPath.row]
-        THPaths.append(helperListViewModel.page!.items[indexPath.row])
-        self.navigationController?.pushViewController(nextTeacherPage, animated: true)
+        let item = helperListViewModel.page!.items[indexPath.row]
+        if item.fileType == .folder {
+            let nextTeacherPage = NJTeachersHelerListController(tableViewStyle: UITableView.Style.plain)
+            nextTeacherPage.intoItem = item
+            THPaths.append(item)
+            self.navigationController?.pushViewController(nextTeacherPage, animated: true)
+        }else if item.fileType == .video {
+            let webVC = NJWebViewController()
+            webVC.html = "<video controls=\"\" autoplay=\"\" name=\"media\"><source src=\"\(item.videoUrl)\" type=\"video/mp4\"></video>"
+            self.navigationController?.pushViewController(webVC, animated: true)
+        }
     }
 }
-

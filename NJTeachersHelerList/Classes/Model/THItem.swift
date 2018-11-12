@@ -21,6 +21,7 @@ class THItem: NSObject {
     var videoTime: String
     var author: String
     var introduction: String
+    let videoUrl: String
     // 扩展
     var jsonData: JSON
     var cellHeight: CGFloat = 50
@@ -36,6 +37,7 @@ class THItem: NSObject {
         videoTime = jsonData["videoTime"].stringValue
         author = jsonData["author"].stringValue
         introduction = jsonData["introduction"].stringValue
+        videoUrl = jsonData["videoUrl"].stringValue
         
         if fileTypeStr == "folder" {
             fileType = .folder
