@@ -21,6 +21,7 @@ class NJTeachersHelerListController: NJRefreshTableViewController {
         self.tableView.contentInset = contentInset
         // 返回按钮的显示
         nj_isBackActionBtnHidden = THPaths.count == 0
+        tableView.tableFooterView = UIView()
     }
 
     deinit {
